@@ -75,7 +75,7 @@ internal class ORTAnalyzer(
     override fun analyze(image: ImageProxy) {
         // Convert the input image to bitmap and resize to 224x224 for model input
         val imgBitmap = image.toBitmap()
-        val rawBitmap = imgBitmap.let { Bitmap.createScaledBitmap(it, 224, 224, false) }
+        val rawBitmap = imgBitmap.let { Bitmap.createScaledBitmap(it, 640, 640, false) } // TODO change dimension
         val bitmap = rawBitmap?.rotate(image.imageInfo.rotationDegrees.toFloat())
 
         if (bitmap != null) {
@@ -83,7 +83,7 @@ internal class ORTAnalyzer(
 
             val imgData = preProcess(bitmap)
             val inputName = ortSession?.inputNames?.iterator()?.next()
-            val shape = longArrayOf(1, 3, 224, 224)
+            val shape = longArrayOf(1, 3, 640, 640) // TODO change dimension
             val env = OrtEnvironment.getEnvironment()
             env.use {
                 val tensor = OnnxTensor.createTensor(env, imgData, shape)

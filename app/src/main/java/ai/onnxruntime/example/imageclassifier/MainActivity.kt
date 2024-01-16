@@ -147,13 +147,13 @@ class MainActivity : AppCompatActivity() {
 
     // Read MobileNet V2 classification labels
     private fun readLabels(): List<String> {
-        return resources.openRawResource(R.raw.imagenet_classes).bufferedReader().readLines()
+        return resources.openRawResource(R.raw.epoch91_classes).bufferedReader().readLines()
     }
 
     // Read ort model into a ByteArray, run in background
     private suspend fun readModel(): ByteArray = withContext(Dispatchers.IO) {
         val modelID =
-            if (enableQuantizedModel) R.raw.mobilenetv2_int8 else R.raw.mobilenetv2_fp32
+            if (enableQuantizedModel) R.raw.epoch91_int8 else R.raw.epoch91_float32
         resources.openRawResource(modelID).readBytes()
     }
 
